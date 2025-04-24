@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Session 1",
+    "description": "Prepare yourself",
+    "date": "2024-01-25T08:00:00Z",
+    "teacher_id": 10,
+    "users": [2, 3, 4],
+    "createdAt": "2025-04-20T08:00:00Z",
+    "updatedAt": "2025-04-20T08:00:00Z"
+  },
+  {
+    "id": 2,
+    "name": "Session 2",
+    "description": "Get Ready",
+    "date": "2025-04-20T08:00:00Z",
+    "teacher_id": 12,
+    "users": [5, 6, 7],
+    "createdAt": "2025-04-20T08:00:00Z",
+    "updatedAt": "2025-04-20T08:00:00Z"
+  },
+  {
+    "id": 3,
+    "name": "Session 3",
+    "description": "Let's go",
+    "date": "2025-04-20T08:00:00Z",
+    "teacher_id": 15,
+    "users": [8, 9, 10],
+    "createdAt": "2025-04-20T08:00:00Z",
+    "updatedAt": "2025-04-20T08:00:00Z"
+  }
+]
