@@ -1,10 +1,20 @@
-# Yoga Application Angular Frontend Projet de Teste
+# Yoga Application Angular Frontend Projet De Test
 
 Ce référentiel contient un frontend angulaire pour le projet de test d'applications Yoga, implémentant des suites de tests avec Jest et Cypress.
 Ce projet a été généré avec [Angular CLI](https://github.com/angular/angular-cli) version 14.1.0.
 
 
-## Conditions préalables
+## Table des Matiéres
+
+- [Yoga Application Angular Frontend Projet De Test](#Yoga-application-angular-frontend-projet-de-test)
+  - [Conditions Prealables](#conditions-prealables)
+  - [Guide Installation](#guide-installation)
+  - [Architecture Projet](#architecture-projet)
+  - [Tests](#tests)
+
+
+
+## Conditions Prealables
 
 ### 1. Node Package Manager (NPM)
 
@@ -61,7 +71,7 @@ Creer deux fichiers de configuration jest.integration.config.js et jest.unit.con
 
 You should see information about the installed Angular CLI version
 
-## Guide D'installation
+## Guide Installation
 
 **Cloner le projet:**
 
@@ -87,7 +97,7 @@ npm install
 npm start
 ```
 
-## Architecture du Projet
+## Architecture Projet
 
 ```
 ├───app
@@ -164,6 +174,8 @@ Pour obtenir un résumé de tout les tests Unitaires de couverture, exécutez la
 npm run test:coverage:unit
 ```
 
+Le rapport de test unitaire est disponible sous forme de document HTML ici`Testez-une-application-full-stack-master/front/coverage/unit/lcov-report/index.html`. Vous pouvez le voir en live avec`live server` Par exemple.
+
 ##### Couverture des Tests d'intégrations
 
 Pour obtenir un résumé des tests d'intégration de couverture, exécutez la commande suivante :
@@ -171,6 +183,9 @@ Pour obtenir un résumé des tests d'intégration de couverture, exécutez la co
 ```shell
 npm run test:coverage:integration
 ```
+
+Le rapport de test unitaire est disponible sous forme de document HTML ici`Testez-une-application-full-stack-master/front/coverage/integration/lcov-report/index.html`. Vous pouvez le voir en live avec`live server` Par exemple.
+
 
 ### E2E
 
@@ -194,6 +209,3 @@ Pour générer un rapport de couverture, exécutez la commande suivante :
 npm run e2e:coverage
 ```
 
-Le rapport de test unitaire est disponible sous forme de document HTML ici`Testez-une-application-full-stack-master/front/coverage/unit/lcov-report/index.html`. Vous pouvez le voir en live avec`live server` Par exemple.
-
-Le rapport de test unitaire est disponible sous forme de document HTML ici`Testez-une-application-full-stack-master/front/coverage/integration/lcov-report/index.html`. Vous pouvez le voir en live avec`live server` Par exemple.
