@@ -82,7 +82,7 @@ describe('Session Update spec', () => {
     cy.get('input[formControlName=date]')
       .should('exist')
       .invoke('val')
-      .should('eq', '2024-01-25');
+      .should('eq', '2025-04-25');
     cy.get('textarea[formControlName=description]')
       .should('exist')
       .invoke('val')
@@ -130,7 +130,7 @@ describe('Session Update spec', () => {
 
   const shouldUpdateSessionAndRedirectUserAndUseSnackBar = () => {
     shouldHaveIncorrectFormAfterDataClear();
-    type('Session Updated', '2030-01-01', 'Description Updated');
+    type('Session Updated', '2025-04-25', 'Description Updated');
     validDropdownSelectionUpdateSessionForm();
 
     submit();
@@ -153,7 +153,7 @@ describe('Session Update spec', () => {
     shouldUpdateSessionAndRedirectUserAndUseSnackBar();
 
     cy.wait('@sessionApiCallPut').then((interception) => {
-      expect(interception.request.body).to.have.property('date', '2030-01-01');
+      expect(interception.request.body).to.have.property('date', '2025-04-25');
       expect(interception.request.body).to.have.property(
         'description',
         'Description Updated'

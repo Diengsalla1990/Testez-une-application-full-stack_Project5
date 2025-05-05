@@ -11,6 +11,9 @@ import { UserService } from '../../services/user.service';
   styleUrls: ['./me.component.scss']
 })
 export class MeComponent implements OnInit {
+  static ngOnInit() {
+    throw new Error('Method not implemented.');
+  }
 
   public user: User | undefined;
 

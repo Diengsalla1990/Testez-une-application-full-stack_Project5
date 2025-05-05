@@ -157,7 +157,7 @@ describe('Sessions Create spec', () => {
     'devrait avoir le nombre et le contenu corrects de option mat dans le menu déroulant de sélection de Teacher',
     SelectionDeroulantCorrecte
   );
-  it('evrait soumettre et créer une session', SoumissionFormCorrect);
+  it('devrait soumettre et créer une session', SoumissionFormCorrect);
   it(
     'devrait avoir des données correctes dans la requête API POST de création de session',
     sessionCreationDataCheckOnPostSessionApiCall

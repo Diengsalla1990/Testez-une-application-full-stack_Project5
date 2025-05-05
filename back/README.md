@@ -1,8 +1,20 @@
-# Yoga App Spring Boot API Teste Projet
+# Yoga App Spring Boot API Test Projet
 
 Ce référentiel contient une API Backend Spring Boot pour le projet de test d'applications Yoga, implémentant des suites de tests avec JUnit5, AssertJ et Mockito.
 
-## Conditions prealables
+
+## Table des Matiéres
+
+- [Yoga App Spring Boot API Test Projet](#yoga-app-spring-boot-api-test-projet)
+  - [Conditions Prealables](#conditions-prealables)
+  - [Guide Installation](#guide-installation)
+  - [Configuration ](#configuration)
+  - [Architecture Projet](#architecture-projet)
+  - [Securite Et Authentification](#securite-et-authentification)
+  - [Tests](#tests)
+
+
+## Conditions Prealables
 
 Avant de commencer à configurer l'API Spring Boot de l'application Yoga, assurez-vous que votre système satisfait aux conditions préalables suivantes :
 
@@ -14,7 +26,7 @@ Avant de commencer à configurer l'API Spring Boot de l'application Yoga, assure
 
 Assurez-vous que ces conditions préalables sont remplies avant de procéder aux étapes de configuration.
 
-## Configuration Settings
+## Configuration 
 
 ### 1. Java
 
@@ -47,11 +59,11 @@ Si vous cherchez de l'inspiration pour le nom de la base de données, pensez à 
 source C:\folder\...\Testez-une-application-full-stack\ressources\sql\script.sql
 ```
 
-## Installation Guide
+## Guide Installation
 
 **Clonage du projet:**
 
-1. Cloner ce dépôt depuis GitHub: `git clone https://github.com/Mickael-Klein/OpenClassRooms-Dev-FullStack-Projet_5.git`
+1. Cloner ce dépôt depuis GitHub: `git clone https://github.com/Diengsalla1990/Testez-une-application-full-stack_Project5.git`
 
 **Configurer les variables d'environnement dans le fichier application.properties**
 
@@ -81,7 +93,7 @@ La clé « jwtKey » doit contenir votre clé de chiffrement JWT, qui sera utili
 
 4. Vous pouvez également utiliser Postman pour tester les appels API. La collection Postman se trouve dans le `Testez-une-application-full-stack/ressources/postman` dossier. (vous devrez utiliser un jeton porteur qui sera renvoyé après un appel de connexion réussi à l'API, puis l'utiliser pour toutes les autres demandes aux points de terminaison de l'API)
 
-## Architecture du Projet
+## Architecture Projet
 
 Le projet adhère à une architecture en couches conventionnelle (Controller/Service/Java Persistence API Repository) afin de garantir la modularité et la maintenabilité de la base de code, conformément aux meilleures pratiques du secteur. Tous les tests sont disponibles dans le `src/test/java/com/openclassrooms` dossier.
 
@@ -124,11 +136,11 @@ Le projet adhère à une architecture en couches conventionnelle (Controller/Ser
                         └───services
 ```
 
-## Securité et Authentification
+## Securite Et Authentification
 
 L'authentification est gérée par Spring Security avec JWT. Toutes les routes nécessitent une authentification, sauf celles liées à la création ou à la connexion d'un compte. Les mots de passe sont cryptés pour garantir leur stockage sécurisé dans la base de données.
 
-## Teste
+## Tests
 
 Pour lancer et générer le code jacoco coverage:
 `mvn clean test`

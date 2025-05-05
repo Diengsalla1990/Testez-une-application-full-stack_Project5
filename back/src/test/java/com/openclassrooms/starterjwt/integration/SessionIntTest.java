@@ -75,6 +75,14 @@ public class SessionIntTest {
     mockSessionDto.setUsers(new ArrayList<Long>(Arrays.asList(1L, 2L)));
   }
 
+  
+  /**
+   * Teste la récupération d'une session par son ID.
+   * Vérifie que :
+   * - Le statut HTTP est 200 (OK)
+   * - Le corps de la réponse contient bien l'ID de la session attendue
+   * - Le service getById est bien appelé une fois
+   */
   @Test
   @WithMockUser
   public void testerSession_GetById_RetournenSessionDto() throws Exception {
@@ -93,6 +101,15 @@ public class SessionIntTest {
 
     verify(sessionService, times(1)).getById(anyLong());
   }
+  
+  
+  /**
+   * Teste la récupération de toutes les sessions.
+   * Vérifie que :
+   * - Le statut HTTP est 200 (OK)
+   * - La réponse contient bien la liste des sessions
+   * - Le service findAll est bien appelé une fois
+   */
 
   @Test
   @WithMockUser
@@ -119,6 +136,13 @@ public class SessionIntTest {
     verify(sessionService, times(1)).findAll();
   }
 
+  
+  /**
+   * Teste l'accès non autorisé sans authentification.
+   * Vérifie que :
+   * - Le statut HTTP est 401 (Unauthorized)
+   * - Le service getById n'est pas appelé
+   */
   @Test
   public void testeSession_Sans_Authentification_GetById_RetourneUnauthorized()
     throws Exception {
@@ -127,6 +151,15 @@ public class SessionIntTest {
       .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     verify(sessionService, never()).getById(anyLong());
   }
+  
+  
+  /**
+   * Teste la création d'une nouvelle session.
+   * Vérifie que :
+   * - Le statut HTTP est 200 (OK)
+   * - La réponse contient bien la session créée
+   * - Le service create est bien appelé une fois
+   */
 
   @Test
   @WithMockUser
@@ -154,6 +187,14 @@ public class SessionIntTest {
     verify(sessionService, times(1)).create(any());
   }
 
+  
+  /**
+   * Teste la mise à jour d'une session existante.
+   * Vérifie que :
+   * - Le statut HTTP est 200 (OK)
+   * - La réponse contient bien la session mise à jour
+   * - Le service update est bien appelé une fois
+   */
   @Test
   @WithMockUser
   public void testeSession_PutUpdate_RetourneSessionDto() throws Exception {
@@ -179,6 +220,14 @@ public class SessionIntTest {
 
     verify(sessionService, times(1)).update(anyLong(), any());
   }
+  
+  /**
+   * Test : Mettre à jour avec ID invalide
+   * Cas : Échec
+   * Vérifie que :
+   * - Le statut HTTP est 400 (Bad Request)
+   * - Le service n'est pas appelé
+   */
 
   @Test
   @WithMockUser
@@ -197,6 +246,14 @@ public class SessionIntTest {
 
     verify(sessionService, never()).update(anyLong(), any());
   }
+  
+  /**
+   * Test : Supprimer une session
+   * Cas : Succès
+   * Vérifie que :
+   * - Le statut HTTP est 200 (OK)
+   * - Le service est appelé une fois
+   */
 
   @Test
   @WithMockUser
@@ -213,6 +270,14 @@ public class SessionIntTest {
     verify(sessionService, times(1)).delete(sessionId);
   }
 
+  
+  /**
+   * Test : Supprimer une session inexistante
+   * Cas : Échec
+   * Vérifie que :
+   * - Le statut HTTP est 404 (Not Found)
+   * - Le service n'est pas appelé
+   */
   @Test
   @WithMockUser
   public void testerSession_Delete_Avec_SessionExistePas_RetourneNotFound()
@@ -226,6 +291,14 @@ public class SessionIntTest {
 
     verify(sessionService, never()).delete(sessionId);
   }
+  
+  /**
+   * Test : Participer à une session
+   * Cas : Succès
+   * Vérifie que :
+   * - Le statut HTTP est 200 (OK)
+   * - Le service est appelé une fois
+   */
 
   @Test
   @WithMockUser
@@ -247,6 +320,14 @@ public class SessionIntTest {
     verify(sessionService, times(1)).participate(sessionId, userId);
   }
 
+  
+  /**
+   * Test : Participer avec ID invalide
+   * Cas : Échec
+   * Vérifie que :
+   * - Le statut HTTP est 400 (Bad Request)
+   * - Le service n'est pas appelé
+   */
   @Test
   @WithMockUser
   public void testerSession_Participate_Avec_InvalidId_RetourneBadRequest()
@@ -266,7 +347,15 @@ public class SessionIntTest {
 
     verify(sessionService, never()).participate(anyLong(), anyLong());
   }
+  
 
+  /**
+   * Test : Participer alors que déjà participant
+   * Cas : Échec
+   * Vérifie que :
+   * - Le statut HTTP est 400 (Bad Request)
+   * - Le service est appelé une fois
+   */
   @Test
   @WithMockUser
   public void testerSession_ParticipateWithUserAlreadyParticipating_ShouldReturnBadRequest()
@@ -290,6 +379,15 @@ public class SessionIntTest {
 
     verify(sessionService, times(1)).participate(sessionId, userId);
   }
+  
+  
+  /**
+   * Test : Ne plus participer à une session
+   * Cas : Succès
+   * Vérifie que :
+   * - Le statut HTTP est 200 (OK)
+   * - Le service est appelé une fois
+   */
 
   @Test
   @WithMockUser
@@ -310,6 +408,14 @@ public class SessionIntTest {
 
     verify(sessionService, times(1)).noLongerParticipate(sessionId, userId);
   }
+  
+  /**
+   * Test : Ne plus participer avec ID invalide
+   * Cas : Échec
+   * Vérifie que :
+   * - Le statut HTTP est 400 (Bad Request)
+   * - Le service n'est pas appelé
+   */
 
   @Test
   @WithMockUser
@@ -330,6 +436,14 @@ public class SessionIntTest {
 
     verify(sessionService, never()).noLongerParticipate(anyLong(), anyLong());
   }
+  
+  /**
+   * Test : Ne plus participer alors que non participant
+   * Cas : Échec
+   * Vérifie que :
+   * - Le statut HTTP est 400 (Bad Request)
+   * - Le service est appelé une fois
+   */
 
   @Test
   @WithMockUser
@@ -354,6 +468,13 @@ public class SessionIntTest {
 
     verify(sessionService, times(1)).noLongerParticipate(sessionId, userId);
   }
+  
+  /**
+   * Convertit un objet en chaîne JSON
+   * @param obj L'objet à convertir
+   * @return La représentation JSON de l'objet
+   * @throws RuntimeException en cas d'erreur de conversion
+   */
 
   private static String asJsonString(final Object obj) {
     try {

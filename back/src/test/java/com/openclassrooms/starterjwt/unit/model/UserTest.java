@@ -45,7 +45,10 @@ public class UserTest {
 	        .build();
 	  }
 	
-	// Test 1: Vérification de la construction du modèle
+	/**
+	 * Test unitaire pour vérifier la construction correcte d'un objet User via le builder Lombok.
+	 * Contrôle que tous les champs sont correctement initialisés.
+	 */
 	@Test
 	public void testUserModel() {
 		User userUnderTest = User
@@ -71,7 +74,12 @@ public class UserTest {
 		
 	}
 	
-	// Test 2: Vérification des setters et constructeurs
+	/**
+	 * Test unitaire pour vérifier le bon fonctionnement :
+	 * - Des setters standards
+	 * - Des différents constructeurs (no-args, partiel et complet)
+	 * Vérifie que les instances sont correctement créées.
+	 */
 	@Test
 	  public void testeUserModel_SettersEtConstructorsMethods() {
 	    User userUnderTest = new User();
@@ -108,7 +116,12 @@ public class UserTest {
 	  }
 	
 	
-	 // Test 3: Validation des contraintes (@Size, @Email, etc.)
+	/**
+	 * Test unitaire pour valider les contraintes de validation (@Size, etc.).
+	 * Vérifie que les violations sont bien détectées quand :
+	 * - Les champs firstName et lastName dépassent la taille maximale autorisée.
+	 */
+	
 	@Test
 	  @SuppressWarnings("ConstantConditions")
 	  public void testeUserModel_Avec_ChampsVide() {
@@ -137,7 +150,10 @@ public class UserTest {
 	    assertThat(violations).isNotEmpty();
 	  }
 
-	// Test 4: Vérification de la méthode toString()
+	/**
+	 * Test unitaire pour vérifier le format de la méthode toString().
+	 * Contrôle que la représentation textuelle correspond exactement au format attendu.
+	 */
 	
 	@Test
 	  public void testeUserModel_ToString() {
@@ -156,7 +172,13 @@ public class UserTest {
 	  }
 	
 	
-	// Test 5: Vérification de equals() et hashCode()
+	/**
+	 * Test unitaire pour vérifier le comportement des méthodes equals() et hashCode().
+	 * Contrôle que :
+	 * - Deux instances avec le même ID sont considérées égales
+	 * - Deux instances avec des IDs différents sont considérées différentes
+	 * - Le hashcode est cohérent avec la méthode equals()
+	 */
 	@Test
 	  public void testeEqualsEtHashCode() {
 	    User userUnderTest1 = testUser;

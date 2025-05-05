@@ -102,7 +102,7 @@ describe('Register spec', () => {
   };
 
   it(
-    'Should send correct datas on register API call',
+    'Doit envoyer des données correctes lors de appel API enregistrement',
     apiRegisterCallDataCheck
   );
   it('Inscription réussie', TestRegisterSuccée);

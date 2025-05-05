@@ -72,10 +72,10 @@ describe('Sessions Detail spec', () => {
     cy.contains('h1', 'Session 1').should('exist');
     cy.contains('span.ml1', 'firstName LASTNAME').should('exist');
     cy.contains('span.ml1', '3 attendees').should('exist');
-    cy.contains('span.ml1', 'January 25, 2025').should('exist');
+    cy.contains('span.ml1', 'April 25, 2025').should('exist');
     cy.contains('div.description', 'Prepare yourself').should('exist');
-    cy.contains('div.created', ' January 25, 2025').should('exist');
-    cy.contains('div.updated', ' January 25, 2025').should('exist');
+    cy.contains('div.created', ' April 25, 2025').should('exist');
+    cy.contains('div.updated', ' April 25, 2025').should('exist');
   };
 
   const AffichageSessionDetailDeAdmin = () => {

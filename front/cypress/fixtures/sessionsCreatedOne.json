@@ -23,20 +23,20 @@
     "id": 3,
     "name": "Session 3",
     "description": "Let's go",
-    "date": "2025-04-20T08:00:00Z",
+    "date": "2025-04-25",
     "teacher_id": 15,
     "users": [8, 9, 10],
-    "createdAt": "2025-04-20T08:00:00Z",
-    "updatedAt": "2025-04-20T08:00:00Z"
+    "createdAt": "2025-04-25",
+    "updatedAt": "2025-04-25"
   },
   {
     "id": 4,
     "name": "Session 4",
     "description": "Created one",
-    "date": "2025-04-20T08:00:00Z",
+    "date": "2025-04-25",
     "teacher_id": 15,
     "users": [],
-    "createdAt": "2025-04-20T08:00:00Z",
-    "updatedAt": "2025-04-20T08:00:00Z"
+    "createdAt": "2025-04-25",
+    "updatedAt": "2025-04-25"
   }
 ]

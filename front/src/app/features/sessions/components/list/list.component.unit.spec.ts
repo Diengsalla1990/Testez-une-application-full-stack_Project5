@@ -44,14 +44,14 @@ describe('ListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize sessions$ with session data from service', (done) => {
+  it('devrait initialiser sessions$ avec les données de session du service', (done) => {
     component.sessions$.subscribe((sessions) => {
       expect(sessions).toEqual(mockSessions);
       done();
     });
   });
 
-  it('should return the current user from sessionService', () => {
+  it('devrait renvoyer user actuel à partir sessionService', () => {
     expect(component.user).toEqual(mockSessionService.sessionInformation);
   });
 });

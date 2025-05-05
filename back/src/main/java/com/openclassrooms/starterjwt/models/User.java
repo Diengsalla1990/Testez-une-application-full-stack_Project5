@@ -43,18 +43,18 @@ private String email;
 // Nom de famille avec contraintes :
 @NonNull
 @Size(max = 20)
-@Column(name = "last_name") // Mappe vers la colonne last_name en base
+@Column(name = "last_name") 
 private String lastName;
 
 // Prénom avec contraintes :
 @NonNull
 @Size(max = 20)
-@Column(name = "first_name") // Mappe vers first_name en base
+@Column(name = "first_name") 
 private String firstName;
 
 // Mot de passe (devrait être hashé en pratique) :
 @NonNull
-@Size(max = 120) // Taille large pour stocker un hash
+@Size(max = 120) 
 private String password;
 
 // Indique si l'utilisateur a des droits admin :
@@ -63,11 +63,11 @@ private boolean admin;
 
 // Date de création automatiquement gérée :
 @CreatedDate
-@Column(name = "created_at", updatable = false) // Non modifiable après création
+@Column(name = "created_at", updatable = false) 
 private LocalDateTime createdAt;
 
 // Date de mise à jour automatiquement gérée :
 @UpdateTimestamp
-@Column(name = "updated_at") // Mise à jour automatique à chaque modification
+@Column(name = "updated_at") // 
 private LocalDateTime updatedAt;
 }

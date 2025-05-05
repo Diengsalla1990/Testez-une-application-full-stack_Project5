@@ -29,164 +29,172 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+//Active l'extension Mockito pour JUnit 5
 @ExtendWith(MockitoExtension.class)
 public class AuthControllerTest {
-	
-	  @Mock
-	  private AuthenticationManager authenticationManager;
+ 
+ // Crée un mock de AuthenticationManager
+ @Mock
+ private AuthenticationManager authenticationManager;
 
-	  @Mock
-	  private JwtUtils jwtUtils;
+ // Crée un mock de JwtUtils
+ @Mock 
+ private JwtUtils jwtUtils;
 
-	  @Mock
-	  private PasswordEncoder passwordEncoder;
+ // Crée un mock de PasswordEncoder
+ @Mock
+ private PasswordEncoder passwordEncoder;
 
-	  @Mock
-	  private UserRepository userRepository;
+ // Crée un mock de UserRepository
+ @Mock
+ private UserRepository userRepository;
 
-	  @InjectMocks
-	  private AuthController authController;
-	  
-	  @Test
-	  void authentificationUser_ReturneJwtResponse() {
-	    // Arrange
-	    LoginRequest loginRequest = new LoginRequest();
-	    loginRequest.setEmail("papedieng@gmail.com");
-	    loginRequest.setPassword("pape123");
-	    Authentication authentication = mock(Authentication.class);
+ // Crée une instance de AuthController en injectant les mocks ci-dessus
+ @InjectMocks
+ private AuthController authController;
+ 
+ /**
+  * Teste l'authentification réussie d'un utilisateur
+  * Vérifie que le contrôleur retourne une JwtResponse valide
+  */
+ @Test
+ void authentificationUser_ReturneJwtResponse() {
+     // Arrange - Préparation des données de test
+     LoginRequest loginRequest = new LoginRequest();
+     loginRequest.setEmail("papedieng@gmail.com");
+     loginRequest.setPassword("pape123");
+     Authentication authentication = mock(Authentication.class);
 
-	    UserDetailsImpl userDetails = new UserDetailsImpl(
-	      10L,
-	      "papedieng@gmail.com",
-	      "Ibra",
-	      "Dieng",
-	      true,
-	      "pape123"
-	    );
+     // Crée un UserDetailsImpl factice pour le test
+     UserDetailsImpl userDetails = new UserDetailsImpl(
+         10L, 
+         "papedieng@gmail.com", 
+         "Ibra", 
+         "Dieng", 
+         true, 
+         "pape123" 
+     );
 
-	    when(authenticationManager.authenticate(any())).thenReturn(authentication);
-	    when(authentication.getPrincipal()).thenReturn(userDetails);
-	    when(jwtUtils.generateJwtToken(authentication)).thenReturn("mockedToken");
-	    when(userRepository.findByEmail(userDetails.getUsername()))
-	      .thenReturn(
-	        Optional.of(
-	          new User("papedieng@gmail.com", "Ibra", "Dieng", "pape123", true)
-	        )
-	      );
+     // Configure le comportement des mocks
+     when(authenticationManager.authenticate(any())).thenReturn(authentication);
+     when(authentication.getPrincipal()).thenReturn(userDetails);
+     when(jwtUtils.generateJwtToken(authentication)).thenReturn("mockedToken");
+     when(userRepository.findByEmail(userDetails.getUsername()))
+         .thenReturn(Optional.of(
+             new User("papedieng@gmail.com", "Ibra", "Dieng", "pape123", true)
+         ));
 
-	    // Act
-	    ResponseEntity<?> responseEntity = authController.authenticateUser(
-	      loginRequest
-	    );
+     // Act - Exécute la méthode à tester
+     ResponseEntity<?> responseEntity = authController.authenticateUser(loginRequest);
 
-	    // Assert
-	    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-	    assertThat(responseEntity.getBody()).isInstanceOf(JwtResponse.class);
-	    JwtResponse jwtResponse = (JwtResponse) responseEntity.getBody();
-	    assertThat(jwtResponse.getToken()).isEqualTo("mockedToken");
+     // Assert - Vérifications
+     assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+     assertThat(responseEntity.getBody()).isInstanceOf(JwtResponse.class);
+     JwtResponse jwtResponse = (JwtResponse) responseEntity.getBody();
+     assertThat(jwtResponse.getToken()).isEqualTo("mockedToken");
 
-	    assertThat(SecurityContextHolder.getContext().getAuthentication())
-	      .isEqualTo(authentication);
+     // Vérifie que l'authentication est bien dans le contexte de sécurité
+     assertThat(SecurityContextHolder.getContext().getAuthentication())
+         .isEqualTo(authentication);
 
-	    assertThat(jwtResponse.getId()).isEqualTo(userDetails.getId());
-	    assertThat(jwtResponse.getUsername()).isEqualTo(userDetails.getUsername());
-	    assertThat(jwtResponse.getFirstName())
-	      .isEqualTo(userDetails.getFirstName());
-	    assertThat(jwtResponse.getLastName()).isEqualTo(userDetails.getLastName());
-	    assertThat(jwtResponse.getAdmin()).isEqualTo(userDetails.getAdmin());
-	    assertThat(jwtResponse.getType()).isEqualTo("Bearer");
+     // Vérifie les données de la réponse
+     assertThat(jwtResponse.getId()).isEqualTo(userDetails.getId());
+     assertThat(jwtResponse.getUsername()).isEqualTo(userDetails.getUsername());
+     assertThat(jwtResponse.getFirstName()).isEqualTo(userDetails.getFirstName());
+     assertThat(jwtResponse.getLastName()).isEqualTo(userDetails.getLastName());
+     assertThat(jwtResponse.getAdmin()).isEqualTo(userDetails.getAdmin());
+     assertThat(jwtResponse.getType()).isEqualTo("Bearer");
 
-	    verify(userRepository, times(1)).findByEmail(userDetails.getUsername());
-	  }
-	  
-	  void authenticationUser_AvecEmailInconnu_RetourneUnauthorized() {
-		    // Arrange
-		    LoginRequest loginRequest = new LoginRequest();
-		    loginRequest.setEmail("inconnu@gmail.com");
-		    loginRequest.setPassword("password123");
+     // Vérifie que la méthode du repository a été appelée
+     verify(userRepository, times(1)).findByEmail(userDetails.getUsername());
+ }
+ 
+ /**
+  * Teste l'échec d'authentification avec un email inconnu
+  * Vérifie que le contrôleur retourne une erreur UNAUTHORIZED
+  */
+ void authenticationUser_AvecEmailInconnu_RetourneUnauthorized() {
+     // Arrange
+     LoginRequest loginRequest = new LoginRequest();
+     loginRequest.setEmail("inconnu@gmail.com");
+     loginRequest.setPassword("password123");
 
-		    when(authenticationManager.authenticate(any()))
-		      .thenThrow(BadCredentialsException.class);
+     // Configure le mock pour lancer une exception
+     when(authenticationManager.authenticate(any()))
+         .thenThrow(BadCredentialsException.class);
 
-		    // Act & Assert
-		    assertThrows(
-		      BadCredentialsException.class,
-		      () -> {
-		        ResponseEntity<?> responseEntity = authController.authenticateUser(
-		          loginRequest
-		        );
-		        assertThat(responseEntity.getStatusCode())
-		          .isEqualTo(HttpStatus.UNAUTHORIZED);
-		        assertThat(responseEntity.getBody())
-		          .isInstanceOf(MessageResponse.class);
-		        MessageResponse messageResponse = (MessageResponse) responseEntity.getBody();
-		        assertThat(messageResponse.getMessage()).isEqualTo("Bad credentials");
-		        verify(userRepository, never()).findByEmail(anyString());
-		      }
-		    );
-		  }
-	  
-	  @Test
-	  void registerUser_RetourneSuccessResponse() {
-	    // Arrange
-	    SignupRequest signupRequest = new SignupRequest();
-	    signupRequest.setEmail("papedieng@gmail.com");
-	    signupRequest.setFirstName("Ibra");
-	    signupRequest.setLastName("Dieng");
-	    signupRequest.setPassword("pape123");
+     // Act & Assert
+     assertThrows(BadCredentialsException.class, () -> {
+         ResponseEntity<?> responseEntity = authController.authenticateUser(loginRequest);
+         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+         assertThat(responseEntity.getBody()).isInstanceOf(MessageResponse.class);
+         MessageResponse messageResponse = (MessageResponse) responseEntity.getBody();
+         assertThat(messageResponse.getMessage()).isEqualTo("Bad credentials");
+         verify(userRepository, never()).findByEmail(anyString());
+     });
+ }
+ 
+ /**
+  * Teste l'inscription réussie d'un nouvel utilisateur
+  * Vérifie que le contrôleur retourne un message de succès
+  */
+ @Test
+ void registerUser_RetourneSuccessResponse() {
+     // Arrange
+     SignupRequest signupRequest = new SignupRequest();
+     signupRequest.setEmail("papedieng@gmail.com");
+     signupRequest.setFirstName("Ibra");
+     signupRequest.setLastName("Dieng");
+     signupRequest.setPassword("pape123");
 
-	    when(userRepository.existsByEmail(signupRequest.getEmail()))
-	      .thenReturn(false);
-	    when(passwordEncoder.encode(signupRequest.getPassword()))
-	      .thenReturn("encodedPassword");
-	    when(userRepository.save(any()))
-	      .thenReturn(
-	        new User("papedieng@gmail.com", "Ibra", "Dieng", "pape123", false)
-	      );
+     // Configure les mocks
+     when(userRepository.existsByEmail(signupRequest.getEmail())).thenReturn(false);
+     when(passwordEncoder.encode(signupRequest.getPassword())).thenReturn("encodedPassword");
+     when(userRepository.save(any())).thenReturn(
+         new User("papedieng@gmail.com", "Ibra", "Dieng", "pape123", false)
+     );
 
-	    // Act
-	    ResponseEntity<?> responseEntity = authController.registerUser(
-	      signupRequest
-	    );
+     // Act
+     ResponseEntity<?> responseEntity = authController.registerUser(signupRequest);
 
-	    // Assert
-	    assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-	    assertThat(responseEntity.getBody()).isInstanceOf(MessageResponse.class);
-	    MessageResponse messageResponse = (MessageResponse) responseEntity.getBody();
-	    assertThat(messageResponse.getMessage()).isEqualTo("User registered successfully!");
+     // Assert
+     assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+     assertThat(responseEntity.getBody()).isInstanceOf(MessageResponse.class);
+     MessageResponse messageResponse = (MessageResponse) responseEntity.getBody();
+     assertThat(messageResponse.getMessage()).isEqualTo("User registered successfully!");
 
-	    verify(userRepository, times(1)).existsByEmail("papedieng@gmail.com");
-	    verify(userRepository, times(1)).save(any());
-	  }
-	  
-	  @Test
-	  void registerUser_AvecEmailExiste_ReturneBadRequest() {
-	    // Arrange
-	    SignupRequest signupRequest = new SignupRequest();
-	    signupRequest.setEmail("pape@gmail.com");
-	    signupRequest.setFirstName("Ibra");
-	    signupRequest.setLastName("Dieng");
-	    signupRequest.setPassword("pape123");
+     // Vérifie les appels aux mocks
+     verify(userRepository, times(1)).existsByEmail("papedieng@gmail.com");
+     verify(userRepository, times(1)).save(any());
+ }
+ 
+ /**
+  * Teste l'échec d'inscription avec un email existant
+  * Vérifie que le contrôleur retourne une erreur BAD_REQUEST
+  */
+ @Test
+ void registerUser_AvecEmailExiste_ReturneBadRequest() {
+     // Arrange
+     SignupRequest signupRequest = new SignupRequest();
+     signupRequest.setEmail("pape@gmail.com");
+     signupRequest.setFirstName("Ibra");
+     signupRequest.setLastName("Dieng");
+     signupRequest.setPassword("pape123");
 
-	    when(userRepository.existsByEmail("pape@gmail.com"))
-	      .thenReturn(true);
+     // Configure le mock pour retourner true (email existe)
+     when(userRepository.existsByEmail("pape@gmail.com")).thenReturn(true);
 
-	    // Act
-	    ResponseEntity<?> responseEntity = authController.registerUser(
-	      signupRequest
-	    );
+     // Act
+     ResponseEntity<?> responseEntity = authController.registerUser(signupRequest);
 
-	    // Assert
-	    assertThat(responseEntity.getStatusCode())
-	      .isEqualTo(HttpStatus.BAD_REQUEST);
-	    assertThat(responseEntity.getBody()).isInstanceOf(MessageResponse.class);
-	    MessageResponse messageResponse = (MessageResponse) responseEntity.getBody();
-	    assertThat(messageResponse.getMessage()).isEqualTo("Error: Email is already taken!");
+     // Assert
+     assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+     assertThat(responseEntity.getBody()).isInstanceOf(MessageResponse.class);
+     MessageResponse messageResponse = (MessageResponse) responseEntity.getBody();
+     assertThat(messageResponse.getMessage()).isEqualTo("Error: Email is already taken!");
 
-	    verify(userRepository, times(1)).existsByEmail("pape@gmail.com");
-	    verify(userRepository, never()).save(any());
-	  }
-	
-
-
+     // Vérifie les appels aux mocks
+     verify(userRepository, times(1)).existsByEmail("pape@gmail.com");
+     verify(userRepository, never()).save(any());
+ }
 }

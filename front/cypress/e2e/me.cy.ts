@@ -67,9 +67,9 @@ describe('Me / Account spec', () => {
     // Vérifie l'affichage de l'email
     cy.contains('p', 'Email: email@test.com').should('exist');
     // Vérifie l'affichage de la date de création
-    cy.contains('p', 'Create at: April 19, 2024').should('exist');
+    cy.contains('p', 'Create at: April 19, 2025').should('exist');
     // Vérifie l'affichage de la date de mise à jour
-    cy.contains('p', 'Last update: April 19, 2024').should('exist');
+    cy.contains('p', 'Last update: April 19, 2025').should('exist');
   };
 
   // Fonction pour vérifier l'affichage spécifique aux admins

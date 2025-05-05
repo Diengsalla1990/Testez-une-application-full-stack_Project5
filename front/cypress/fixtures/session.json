@@ -2,9 +2,9 @@
   "id": 1,
   "name": "Session 1",
   "description": "Prepare yourself",
-  "date": "2025-01-25",
+  "date": "2025-04-25",
   "teacher_id": 10,
   "users": [2, 3, 4],
-  "createdAt": "2025-01-25",
-  "updatedAt": "2025-01-25"
+  "createdAt": "2025-04-25",
+  "updatedAt": "2025-04-25"
 }
